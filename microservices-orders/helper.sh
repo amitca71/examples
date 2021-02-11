@@ -53,11 +53,11 @@ function validate_version_confluent_cli_for_cp() {
   validate_version_confluent_cli_v2 || exit 1
 
   VER_MIN="1.11.0"
-  VER_MAX="1.22.0"
+  VER_MAX="1.16.3"
   CLI_VER=$(get_version_confluent_cli)
 
   if version_gt $VER_MIN $CLI_VER || version_gt $CLI_VER $VER_MAX ; then
-    echo "Confluent CLI version ${CLI_VER} is not compatible with the currently running Confluent Platform version ${CONFLUENT}. Set Confluent CLI version appropriately, see https://docs.confluent.io/platform/current/installation/versions-interoperability.html#confluent-cli for more information."
+    echo "Confluent CLI version ${CLI_VER} is not compatibile with the currently running Confluent Platform version ${CONFLUENT}. Set Confluent CLI version appropriately, see https://docs.confluent.io/platform/current/installation/versions-interoperability.html#confluent-cli for more information."
     exit 1
   fi
 }
@@ -312,7 +312,7 @@ function error_not_compatible_confluent_cli() {
 function get_and_compile_kafka_streams_examples() {
 
   [[ -d "kafka-streams-examples" ]] || git clone https://github.com/confluentinc/kafka-streams-examples.git
-  (cd kafka-streams-examples && git fetch && git checkout ${CONFLUENT_RELEASE_TAG_OR_BRANCH} && git pull && echo "Building kafka-streams-examples $CONFLUENT_RELEASE_TAG_OR_BRANCH" && mvn clean package -DskipTests) || {
+  (cd kafka-streams-examples && git fetch && git checkout ${CONFLUENT_RELEASE_TAG_OR_BRANCH} && git pull && echo "Building kafka-streams-examples $CONFLUENT_RELEASE_TAG_OR_BRANCH" && mvn package -DskipTests) || {
     echo "ERROR: There seems to be a BUILD FAILURE error with confluentinc/kafka-streams-examples. Please troubleshoot and try again."
     exit 1
   }
@@ -538,25 +538,4 @@ function append_once() {
   if ! grep -q ${1} ${2}; then
     echo ${1} >> ${2}
   fi
-}
-
-function check_ksqlDB_host_running()
-{
-  if [[ $(curl -s http://ksqldb-server:8088/info) != *RUNNING* ]]; then
-    return 1
-  fi
-  return 0
-}
-
-function check_schema_registry_topics_exists()
-{
-  SR_TOPICS=$(curl -s http://schema-registry:8081/subjects)
-  arr=("$@")
-  for i in "${arr[@]}";
-    do
-      if [ $(echo "$SR_TOPICS" | grep -v "$i") ]; then
-        return 1
-      fi
-    done
-  return 0
 }

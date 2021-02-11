@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 TOPICS_FILE="$@"
 BOOTSTRAP_SERVERS=${BOOTSTRAP_SERVERS:-"broker:9092"}
