@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash -x
 
 if [[ -z "${ELASTIC_HOST}" ]]; then
   echo -e "ELASTIC_HOST not set, defaulting to localhost"
@@ -42,3 +42,5 @@ curl -XPUT "http://$ELASTIC_HOST:9200/_template/kafkaconnect/" -H 'Content-Type:
     }
   }
 }'
+
+
