@@ -65,7 +65,15 @@ source ./scripts/render-connector-config.sh
 curl -s -S -XPOST -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/ -d @$OUTPUT_FILE
 
 
-echo
+printf "\n\n====== Submitting Kafka Connector to JDBC MSSQL\n"
+INPUT_FILE=./connectors/jdbc_mssql_templeate.config
+OUTPUT_FILE=./connectors/rendered-connectors/jdbc_mssql.conf
+KAFKA_JDBC_MODE=incrementing
+source ./scripts/render-connector-config.sh
+curl -s -S -XPOST -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/ -d @$OUTPUT_FILE
+
+
+echo  
 echo "To destroy the Confluent Cloud resources and stop the demo, run ->"
 echo "    ./stop-ccloud.sh $CONFIG_FILE"
 echo
