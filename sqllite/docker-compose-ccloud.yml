@@ -19,10 +19,11 @@ services:
   connect:
     image: ${REPOSITORY}/cp-server-connect:${CONFLUENT_DOCKER_TAG}
     container_name: connect
-    depends_on:
-      - sqlite
+    #depends_on:
+            #  - sqlite
     ports:
       - "8083:8083"
+    restart: always
     environment:
       CONNECT_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
@@ -89,15 +90,15 @@ services:
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run
 
-  sqlite:
-    image: sqlite:latest
-    container_name: sqlite
-    volumes:
-      - database:/db/data
-    build:
-      context: ./db 
-    stdin_open: true
-    tty: true
+        #  sqlite:
+        #image: sqlite:latest
+        # container_name: sqlite
+        #volumes:
+        #- database:/db/data
+        #build:
+        #context: ./db 
+        #stdin_open: true
+        #tty: true
 
   ksqldb-server:
     image: ${REPOSITORY}/cp-ksqldb-server:${CONFLUENT_DOCKER_TAG}

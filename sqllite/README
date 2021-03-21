@@ -3,6 +3,7 @@ add the following vars to .bashrc:
 export AWS_ACCESS_KEY_ID="XXX"
 export AWS_SECRET_KEY="XXX"
 export DB_URL="jdbc:sqlserver://xxxx;instance=tempdb"
+export DB_URL="jdbc:sqlserver://<ip address>;databaseName=xxx"
 export DB_USER="xx"
 export DB_PASS="xx"
 chmod 755 `find . -name *.sh`
@@ -17,6 +18,21 @@ chmod 755 `find . -name *.sh`
 execute docker services:
 sudo ./cc-docker.sh
 
+create connectors:
+create-connectors.sh
 
-stop:
+delete all connectors:
+delete-connectors.sh
+
+
+remove cluster and env:
 ./stop-ccloud.sh stack-configs/java-service-account-xxx.config
+
+
+curl -s -S -XPOST -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/ -d @./connectors/
+ 
+ curl -s -S -XGET -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/
+ 
+ curl -s -S -XGET -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/amits3sink/config
+ 
+ curl -s -S -XDELETE -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/amits3sink
