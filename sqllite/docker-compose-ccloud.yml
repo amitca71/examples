@@ -136,15 +136,15 @@ services:
     entrypoint: /bin/sh
     tty: true
     
-  ksql-query-setup:
-    image: ${REPOSITORY}/cp-ksqldb-cli:${CONFLUENT_DOCKER_TAG}
-    container_name: ksql-query-setup
-    depends_on:
-      - connect
-      - ksqldb-server
-    volumes:
-    - ./run-ksql.sh:/tmp/run-ksql.sh
-    - ./statements.sql:/tmp/statements.sql
-    entrypoint: /bin/sh
-    tty: true
-    command: "/tmp/run-ksql.sh"
+    #  ksql-query-setup:
+    #image: ${REPOSITORY}/cp-ksqldb-cli:${CONFLUENT_DOCKER_TAG}
+    #container_name: ksql-query-setup
+    #depends_on:
+    #  - connect
+    #  - ksqldb-server
+    #volumes:
+    #- ./run-ksql.sh:/tmp/run-ksql.sh
+    #- ./statements.sql:/tmp/statements.sql
+    #entrypoint: /bin/sh
+    #tty: true
+    #command: "/tmp/run-ksql.sh"
