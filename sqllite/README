@@ -1,0 +1,22 @@
+#initiate the confluent environment and cluster
+add the following vars to .bashrc:
+export AWS_ACCESS_KEY_ID="XXX"
+export AWS_SECRET_KEY="XXX"
+export DB_URL="jdbc:sqlserver://xxxx;instance=tempdb"
+export DB_USER="xx"
+export DB_PASS="xx"
+chmod 755 `find . -name *.sh`
+ wget https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
+ tar zxvf ccloud_latest_linux_amd64.tar.gz
+ cd ccloud/
+ sudo cp ./ccloud /usr/local/bin/
+ ccloud login --save
+ sudo apt install jq
+./start-ccloud.sh
+
+execute docker services:
+sudo ./cc-docker.sh
+
+
+stop:
+./stop-ccloud.sh stack-configs/java-service-account-xxx.config

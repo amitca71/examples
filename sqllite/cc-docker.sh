@@ -1,7 +1,7 @@
 #!/bin/bash
 source ../utils/ccloud_library.sh
 source ../utils/helper.sh
-
+WARMUP_TIME=80
 source ../utils/config.env
 source ./delta_configs/env.delta
 docker-compose -f docker-compose-ccloud.yml up -d --build
@@ -38,11 +38,3 @@ source ./scripts/render-connector-config.sh
 curl -s -S -XPOST -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/ -d @$OUTPUT_FILE
 
 
-echo  
-echo "To destroy the Confluent Cloud resources and stop the demo, run ->"
-echo "    ./stop-ccloud.sh $CONFIG_FILE"
-echo
-
-echo
-ENVIRONMENT=$(ccloud::get_environment_id_from_service_id $SERVICE_ACCOUNT_ID)
-echo "Tip: 'ccloud' CLI has been set to the new environment $ENVIRONMENT"
