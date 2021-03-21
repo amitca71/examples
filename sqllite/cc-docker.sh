@@ -1,6 +1,6 @@
 #!/bin/bash
 source ../utils/config.env
-docker-compose -f docker-compose-ccloud.yml --env-file ./delta_configs/env.delta build
+docker-compose -f docker-compose-ccloud.yml --env-file ./delta_configs/env.delta up -d --build
 printf "\n====== Giving services $WARMUP_TIME seconds to startup\n"
 sleep $WARMUP_TIME 
 MAX_WAIT=240
