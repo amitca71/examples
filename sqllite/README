@@ -28,11 +28,6 @@ delete-connectors.sh
 remove cluster and env:
 ./stop-ccloud.sh stack-configs/java-service-account-xxx.config
 
-
-curl -s -S -XPOST -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/ -d @./connectors/
- 
- curl -s -S -XGET -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/
- 
- curl -s -S -XGET -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/amits3sink/config
- 
- curl -s -S -XDELETE -H Accept:application/json -H Content-Type:application/json http://localhost:8083/connectors/amits3sink
+for stand alone mode, make sure to set env variables
+export REPLICATION_FACTOR=1
+source examples/utils/config.env
